@@ -10,7 +10,7 @@ include("config.php");
     <body>
         <header>
             <form action="search.php" method="get">
-                <p><input type="text" name="query" value="<?php echo htmlspecialchars($_GET['query']); ?>" /></p>
+                <p><input type="text" name="query" /></p>
                 <input type="submit" />
             </form>
         </header>

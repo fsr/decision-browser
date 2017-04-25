@@ -24,22 +24,6 @@ include("config.php");
         <hr />
 
         <?php
-        // set up the database connection, add db if not existent
-        // TODO: Remove this (put it into a separate file?)
-        $db = new SQLite3($db_path) or die('Unable to open database');
-        $query = "CREATE TABLE IF NOT EXISTS decisions (
-                    decision_id STRING PRIMARY KEY,
-                    text STRING,
-                    comment STRING,
-                    v_yes INTEGER,
-                    v_no INTEGER,
-                    v_neutral INTEGER,
-                    date STRING,
-                    link STRING,
-                    accepted INTEGER)";
-        $db->exec($query) or die('Create db failed');
-        $db->close();
-
         // open a read-only connection to the database and receive all matching rows
         $db = new SQLite3($db_path, SQLITE3_OPEN_READONLY) or die('Unable to open database');
         // TODO: Use bindValue rather than the construct below.
