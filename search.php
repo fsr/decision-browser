@@ -39,7 +39,12 @@ include("config.php");
                 // TODO: Add Link to the Detail View, shorten the text, add "more" link.
                 ?>
                 <article>
-                    <p class="heading"> Beschluss <?php print($row['decision_id']); ?></p>
+                    <p class="heading"><?php 
+                    if ($row['money_limit'] != NULL) { 
+                        print("Finanzrahmen ". $row['decision_id'] ." (". $row['money_limit'] ."€)"); 
+                    } else {
+                        print("Beschluss ". $row['decision_id']);
+                    } ?></p>
                     <p class="outcome"><?php if ($row['accepted'] == 1) {print("Angenommen.");} else {print("Abgelehnt.");}?></p>
                     <p class="text"><?php print($row['text']); ?></p>
                     <p class="comment"><?php print($row['comment']); ?></p>
