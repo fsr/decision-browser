@@ -26,8 +26,8 @@ include("config.php");
         <?php
         // open a read-only connection to the database and receive all matching rows
         $db = new SQLite3($db_path, SQLITE3_OPEN_READONLY) or die('Unable to open database');
-        // TODO: Use bindValue rather than the construct below.
-        $smt = $db->prepare("SELECT * FROM decisions WHERE decision_id LIKE '%". $_GET['query'] ."%' OR text LIKE '%". $_GET['query'] ."%' OR comment LIKE '%". $_GET["query"] ."%' OR date LIKE '%". $_GET["query"] ."%' ORDER BY decision_id DESC");
+        $escaped_query = SQLite3::escapeString($_GET['query']);
+        $smt = $db->prepare("SELECT * FROM decisions WHERE decision_id LIKE '%". $escaped_query ."%' OR text LIKE '%". $escaped_query ."%' OR comment LIKE '%". $escaped_query ."%' OR date LIKE '%". $escaped_query ."%' ORDER BY decision_id DESC");
         $result = $smt->execute();
         ?>
 
