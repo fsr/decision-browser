@@ -67,10 +67,12 @@ include("config.php");
                 ?>
 
                 <article>
-                    <h2>No results</h2>
+                    <h2>Keine Ergebnisse</h2>
                     <p class="heading">
-                        Uh oh! Seems like no decision matched your criteria.
+                        Es wurden keine Beschlüsse gefunden, die auf deine Suchkriterien passen. :(
                     </p>
+
+                    <a href="index.php">Zurück zur Startseite.</a>
                 </article>
 
                 <?php

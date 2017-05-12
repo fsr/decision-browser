@@ -88,6 +88,14 @@ footer {
     color: #666;
 }
 
+a:any-link {
+    color: #37abc8;
+}
+
+a:hover {
+    color: #0974D1;
+}
+
 .outcome.decided, .votes:hover .decided {
     background: #eef4d7;
     color: #677821;
