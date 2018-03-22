@@ -49,7 +49,9 @@ include("config.php");
                         <?php if (strlen($row['rationale']) != 0) {print('<p class="rationale"><b>Begründung:</b> '. $row['rationale'] .'</p>');} ?>
                         <div class="meta">
                             <p class="comment"><?php print($row['comment']); ?></p>
-                            <?php if ($row['v_yes'] == 'MH') {print('<span class="decided">Mehrheit</span>');} else { ?>
+                            <?php if ($row['accepted'] == 1 && $row['v_yes'] == 0) { ?>
+                                <p class="votes" title="Der Beschluss wurde mehrheitlich gefasst.">[ <span class="decided">Mehrheit</span> ]</p>
+                            <?php } else { ?>
                                 <p class="votes" title="Stimmen: [dafür | dagegen | Enthaltungen]">[ <?php print('<span class="decided">'. $row['v_yes'] .'</span> | <span class="rejected">'. $row['v_no'] ."</span> | ". $row['v_neutral']); ?> ]</p>
                             <?php } ?>
                         </div>
