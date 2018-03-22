@@ -53,6 +53,7 @@ include("config.php");
                         <?php if ($row['accepted'] == 1) {print('<div class="outcome decided">Angenommen</div>');} else {print('<div class="outcome rejected">Abgelehnt</div>');}?></div>
                         <p class="date">Beschlossen am <?php if (strlen($row['link']) != 0) { print("<a href='". $row['link'] ."'>". $row['date'] ."</a>"); } else { print($row['date']); } ?>.</p>
                         <p class="text"><?php print($row['text']); ?></p>
+                        <?php if (strlen($row['rationale']) != 0) {print('<p class="rationale"><b>Begründung:</b> '. $row['rationale'] .'</p>');} ?>
                         <div class="meta">
                             <p class="comment"><?php print($row['comment']); ?></p>
                             <p class="votes" title="Stimmen: [dafür | dagegen | Enthaltungen]">[ <?php print('<span class="decided">'. $row['v_yes'] .'</span> | <span class="rejected">'. $row['v_no'] ."</span> | ". $row['v_neutral']); ?> ]</p>

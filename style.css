@@ -83,6 +83,12 @@ footer {
     font-size: 1.2em;
 }
 
+.rationale {
+    text-align: justify;
+    font-size: 1em;
+    color: #444;
+}
+
 .comment {
     font-style: italic;
     color: #666;
@@ -147,6 +153,7 @@ header h1 img {
         padding: 1% 15% 2% 15%;
         margin-bottom: 3%;
     }
+}
 
 @media screen and (min-width: 1280px) {
     .content, footer {

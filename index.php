@@ -21,7 +21,7 @@ include("config.php");
         </header>
 
         <div class="content">
-        <h2>Die neusten Beschlüsse</h2>
+            <h2>Die neusten Beschlüsse</h2>
             <?php
             // open a read-only connection to the database and receive all matching rows
             $db = new SQLite3($db_path, SQLITE3_OPEN_READONLY) or die('Unable to open database');
@@ -46,6 +46,7 @@ include("config.php");
                         <?php if ($row['accepted'] == 1) {print('<div class="outcome decided">Angenommen</div>');} else {print('<div class="outcome rejected">Abgelehnt</div>');}?></div>
                         <p class="date">Beschlossen am <?php if (strlen($row['link']) != 0) { print("<a href='". $row['link'] ."'>". $row['date'] ."</a>"); } else { print($row['date']); } ?>.</p>
                         <p class="text"><?php print($row['text']); ?></p>
+                        <?php if (strlen($row['rationale']) != 0) {print('<p class="rationale"><b>Begründung:</b> '. $row['rationale'] .'</p>');} ?>
                         <div class="meta">
                             <p class="comment"><?php print($row['comment']); ?></p>
                             <p class="votes" title="Stimmen: [dafür | dagegen | Enthaltungen]">[ <?php print('<span class="decided">'. $row['v_yes'] .'</span> | <span class="rejected">'. $row['v_no'] ."</span> | ". $row['v_neutral']); ?> ]</p>
@@ -60,16 +61,17 @@ include("config.php");
                 ?>
 
                 <article>
-                    <h2>No results</h2>
+                    <h2>Keine Ergebnisse</h2>
                     <p class="heading">
-                        Uh oh! Seems like no decision matched your criteria.
+                        Es wurden keine Beschlüsse gefunden. :(
                     </p>
                 </article>
 
                 <?php
                 }
                 ?>
-        </div>
 
+            </div>
+        </div>
     </body>
 </html>

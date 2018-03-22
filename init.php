@@ -7,6 +7,7 @@ $db = new SQLite3($db_path) or die('Unable to open database');
 $query = "CREATE TABLE IF NOT EXISTS decisions (
             decision_id STRING PRIMARY KEY,
             text TEXT,
+            rationale TEXT,
             money_limit REAL,
             comment TEXT,
             v_yes INTEGER,
