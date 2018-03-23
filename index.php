@@ -14,7 +14,7 @@ include("config.php");
 
     <body>
         <header>
-            <h1><a href="/"><img src="logo_header.png" alt="iFSR Decision Database Browser" title="iFSR Decision Database Browser" /></a> Decision Database Browser</h1>
+            <h1><a href="index.php"><img src="logo_header.png" alt="iFSR Decision Database Browser" title="iFSR Decision Database Browser" /></a> Decision Database Browser</h1>
             <form action="search.php" method="get">
                 <input type="text" name="query" placeholder="Suche" />
             </form>
@@ -77,5 +77,9 @@ include("config.php");
 
             </div>
         </div>
+
+        <footer>
+            Diese Datenbank ist ein Projekt des <a href="https://www.ifsr.de">FSR Informatik</a>. – <a href="https://www.ifsr.de/fsr:kontakt">Impressum</a> – Dieses Projekt ist auf <a href="https://github.com/fsr/decision-browser">GitHub</a>.
+        </footer>
     </body>
 </html>
