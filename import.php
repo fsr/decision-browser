@@ -31,7 +31,7 @@ while (false !== ($entry = $dir->read())) {
         echo "Parsing ". $file_path ."...\n";
 
         $parsed = yaml_parse_file($file_path);
-        if (!parsed) {
+        if (!$parsed) {
             echo "Parsing file ". $file_path ." did not succeed. Please inspect the file and make sure it is valid YAML.\n";
         } else {
             // construct the necessary data for the decision entries
