@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iFSR Protokoll Grep</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.7/css/pico.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>iFSR Protokoll Grep</h1>
+      <p>
+        Protokolle schnell durchsuchen. <a href="/">Hier</a> nach Anträgen
+        suchen.
+      </p>
+
+      <!-- search -->
+      <form method="get">
+        <input type="text" name="q" placeholder="Suche" value="{{ q or '' }}" />
+        <input type="submit" value="Suchen" />
+      </form>
+
+      {% if results %}
+      <h2>Gefunden in {{results|length}} Protokollen</h2>
+      {% endif %} {% for result in results %}
+      <article>
+        <a href="https://ftp.ifsr.de/{{ result }}.pdf">{{ result }}</a>
+        <br /><br />{% for line in results[result] %}
+        <p>{{ highlight(line) | safe }}</p>
+        {% endfor %}
+      </article>
+      {% endfor %}
+    </div>
+  </body>
+</html>

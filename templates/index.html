@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iFSR Beschlüsse</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.7/css/pico.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>iFSR Beschlüsse</h1>
+      <p>
+        Die Beschlüsse des FSR Informatik der TU Dresden.
+        <a href="/grep">Hier</a> nach Text in Protokollen suchen.
+      </p>
+
+      <!-- search -->
+      <form action="/" method="get">
+        <input type="text" name="q" placeholder="Suche" value="{{ q or '' }}" />
+        <input
+          type="number"
+          name="year"
+          placeholder="Jahr"
+          value="{{ year or '' }}"
+        />
+        <input type="submit" value="Suchen" />
+      </form>
+
+      {% for beschluss in beschluesse %}
+      <article>
+        <div style="float: right">{{ beschluss.vote_submitter }}</div>
+
+        {% if beschluss.vote_money %}
+        <span class="money">{{ beschluss.vote_money }} €</span><br /><br />
+        {% else %}
+        <span></span><br /><br />
+
+        {% endif %} {{ beschluss.vote_text }} <br /><br />
+        <small style="display: block"> {{ beschluss.vote_reason }} </small>
+        <br />
+
+        <small>
+          Beschluss Nr. {{ beschluss.vote_number }} vom
+          <a
+            href='https://ftp.ifsr.de/protokolle/{{ beschluss.date.strftime("%Y") }}/{{ beschluss.date.strftime("%Y-%m-%d") }}.pdf'
+          >
+            {{ beschluss.date.strftime("%d.%m.%Y") }}
+          </a>
+        </small>
+        {% if beschluss.voting_dafuer %}
+        <br /><br />
+        <span class="money">
+          {{ beschluss.voting_dafuer }} | {{ beschluss.voting_dagegen }} | {{
+          beschluss.voting_enthaltung }}
+        </span>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </body>
+</html>

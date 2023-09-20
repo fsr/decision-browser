@@ -1,0 +1,17 @@
+h1 {
+    padding-top: 2em;
+    margin-bottom: 0;
+}
+
+.money {
+    background-color: #7aff7a;
+    border-radius: 0.25rem;
+    padding: 8px;
+}
+
+/* dark mode */
+@media (prefers-color-scheme: dark) {
+    .money {
+        background-color: #228300;
+    }
+}
