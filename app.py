@@ -1,16 +1,32 @@
 from collections import defaultdict
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for, session, redirect
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 import os
 import re
 from dotenv import load_dotenv
 from datetime import datetime
+from authlib.integrations.flask_client import OAuth 
+from functools import wraps
 
 from models import Beschluss
 
-app = Flask(__name__)
-
 load_dotenv()
+
+app = Flask(__name__)
+app.secret_key = os.getenv("FLASK_SECRET")
+
+
+oauth = OAuth(app)
+oauth.register(
+    name='dex',
+    server_metadata_url=os.getenv("OAUTH_CONF_URL")
+    client_id=os.getenv("OAUTH_CLIENT_ID"),
+    client_secret=os.getenv("OAUTH_CLIENT_SECRET"),
+    client_kwargs={
+        'scope': 'openid email profile'
+    }
+)
+
 
 db_url = os.getenv("DATABASE_URL")
 
@@ -18,7 +34,17 @@ db_url = os.getenv("DATABASE_URL")
 engine = create_engine(db_url, echo=True, pool_pre_ping=True, pool_recycle=300)
 
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            # Redirect to login page if user is not logged in
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 @app.route("/")
+@login_required
 def index():
     q = request.args.get("q")
     year = request.args.get("year") or str(datetime.now().year)
@@ -43,7 +69,7 @@ def index():
 def grep_text(q: str):
     files = [
         os.path.join(dirpath, f)
-        for dirpath, dirnames, files in os.walk("protokolle")
+        for dirpath, dirnames, files in os.walk("/protokolle")
         for f in files
         if f.endswith(".tex")
     ]
@@ -75,6 +101,7 @@ def grep_text(q: str):
 
 
 @app.route("/grep")
+@login_required
 def grep():
     q = request.args.get("q")
     # check if q only contains letters using regex
@@ -98,6 +125,23 @@ def grep():
 
     return render_template("grep.html", q=q)
 
+
+@app.route('/login')
+def login():
+    redirect_uri = url_for('auth', _external=True)
+    return oauth.dex.authorize_redirect(redirect_uri)
+
+@app.route('/auth')
+def auth():
+    token = oauth.dex.authorize_access_token()
+    session['user'] = token['userinfo']
+    return redirect('/')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
 
 if __name__ == "__main__":
     if os.getenv("FLASK_ENV") == "development":

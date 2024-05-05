@@ -55,7 +55,7 @@ def get_beschluesse(content, filename):
     return beschluesse
 
 
-dir = "protokolle"
+dir = "/protokolle"
 
 # find all tex recursively files in dir
 files = [
