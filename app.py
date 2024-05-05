@@ -19,7 +19,7 @@ app.secret_key = os.getenv("FLASK_SECRET")
 oauth = OAuth(app)
 oauth.register(
     name='dex',
-    server_metadata_url=os.getenv("OAUTH_CONF_URL")
+    server_metadata_url=os.getenv("OAUTH_CONF_URL"),
     client_id=os.getenv("OAUTH_CLIENT_ID"),
     client_secret=os.getenv("OAUTH_CLIENT_SECRET"),
     client_kwargs={
