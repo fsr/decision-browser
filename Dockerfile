@@ -1,4 +1,7 @@
 FROM python:3.9-bullseye
+
+LABEL org.opencontainers.image.source=https://github.com/fsr/decision-browser
+
 COPY . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
