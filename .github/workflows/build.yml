@@ -1,0 +1,27 @@
+name: Build and Push to GitHub Container Registry with buildah
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    name: Build and push image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Image
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: decisions
+          tags: v1 ${{ github.sha }}
+          containerfiles: |
+            ./Dockerfile
+      - name: Push To Image Registry
+        id: push
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ghcr.io/fsr
+          username: fsr
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Print the image url
+        run: echo "Image pushed to ${{ steps.push.outputs.registry-paths }}"
