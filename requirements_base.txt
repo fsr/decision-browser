@@ -1,0 +1,8 @@
+Flask
+sqlmodel
+PyMySQL
+psycopg2-binary
+python-dotenv
+gunicorn
+authlib
+requests
